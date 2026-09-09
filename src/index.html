@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quick Note</title>
+  </head>
+  <body class="capture-page">
+    <main class="capture-shell">
+      <label class="sr-only" for="note">Quick note</label>
+      <textarea
+        id="note"
+        aria-describedby="status"
+        autofocus
+        placeholder="Type a note…"
+        spellcheck="true"
+      ></textarea>
+      <p id="status" class="status" aria-live="polite"></p>
+    </main>
+    <script type="module" src="./capture-entry.ts"></script>
+  </body>
+</html>

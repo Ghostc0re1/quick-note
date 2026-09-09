@@ -1,0 +1,28 @@
+name: Verify
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: microsoft/setup-winapp@v1
+      - run: npm ci
+      - run: npm run check
+      - run: npm run test
+      - run: npm run rust:fmt
+      - run: npm run rust:clippy
+      - run: npm run rust:test
+      - run: npm run msix:validate

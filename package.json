@@ -1,0 +1,30 @@
+{
+  "name": "quick-note",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "check": "tsc --noEmit",
+    "test": "vitest run",
+    "tauri": "tauri",
+    "rust:fmt": "cargo fmt --manifest-path src-tauri/Cargo.toml --check",
+    "rust:clippy": "cargo clippy --manifest-path src-tauri/Cargo.toml -- -D warnings",
+    "rust:test": "cargo test --manifest-path src-tauri/Cargo.toml",
+    "version:check": "node scripts/version-check.mjs",
+    "msix:package": "npm run version:check && npm run tauri -- build --no-bundle && node scripts/package-msix.mjs",
+    "msix:validate": "npm run msix:package",
+    "dev:identity": "npm run build && cargo build --manifest-path src-tauri/Cargo.toml && node scripts/run-with-identity.mjs"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2.11.0",
+    "jsdom": "^27.0.0",
+    "typescript": "^5.9.3",
+    "vite": "^7.1.7",
+    "vitest": "^3.2.4"
+  },
+  "dependencies": {
+    "@tauri-apps/api": "^2.8.0"
+  }
+}

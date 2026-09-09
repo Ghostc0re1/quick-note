@@ -1,0 +1,47 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Quick Note",
+  "version": "0.1.0",
+  "identifier": "com.quicknote.desktop",
+  "build": {
+    "beforeDevCommand": "npm run dev",
+    "devUrl": "http://localhost:5173",
+    "beforeBuildCommand": "npm run build",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "windows": [
+      {
+        "label": "capture",
+        "title": "Quick Note",
+        "url": "index.html",
+        "width": 540,
+        "height": 250,
+        "resizable": false,
+        "decorations": false,
+        "center": true,
+        "visible": false,
+        "skipTaskbar": true,
+        "backgroundColor": "#2b2b2b"
+      },
+      {
+        "label": "history",
+        "title": "Recent Notes — Quick Note",
+        "url": "history.html",
+        "width": 560,
+        "height": 620,
+        "resizable": false,
+        "center": true,
+        "visible": false,
+        "skipTaskbar": true
+      }
+    ],
+    "security": {
+      "capabilities": ["default"]
+    }
+  },
+  "bundle": {
+    "active": true,
+    "icon": ["icons/icon.ico"]
+  }
+}

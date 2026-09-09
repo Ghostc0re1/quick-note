@@ -1,0 +1,69 @@
+name: Release to Microsoft Store
+
+on:
+  push:
+    tags: ["v*.*.*"]
+
+permissions:
+  contents: read
+
+jobs:
+  release:
+    runs-on: windows-latest
+    environment: microsoft-store
+    env:
+      MSIX_CHANNEL: store
+      MSIX_IDENTITY_NAME: ${{ vars.MSIX_IDENTITY_NAME }}
+      MSIX_PUBLISHER: ${{ vars.MSIX_PUBLISHER }}
+      MSIX_PUBLISHER_DISPLAY_NAME: ${{ vars.MSIX_PUBLISHER_DISPLAY_NAME }}
+      MSSTORE_PRODUCT_ID: ${{ vars.MSSTORE_PRODUCT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: microsoft/setup-winapp@v1
+      - uses: microsoft/microsoft-store-apppublisher@v1.1
+      - run: npm ci
+      - shell: pwsh
+        run: |
+          if ((git cat-file -t $env:GITHUB_REF_NAME) -ne "tag") {
+            throw "Store releases require an annotated tag."
+          }
+          npm run version:check -- --tag $env:GITHUB_REF_NAME
+      - run: npm run check
+      - run: npm run test
+      - run: npm run rust:fmt
+      - run: npm run rust:clippy
+      - run: npm run rust:test
+      - run: npm run msix:package
+      - uses: actions/upload-artifact@v4
+        with:
+          name: store-msix
+          path: artifacts/*.msix
+          retention-days: 7
+      - shell: pwsh
+        env:
+          AZURE_AD_TENANT_ID: ${{ secrets.AZURE_AD_TENANT_ID }}
+          AZURE_AD_APPLICATION_CLIENT_ID: ${{ secrets.AZURE_AD_APPLICATION_CLIENT_ID }}
+          AZURE_AD_APPLICATION_SECRET: ${{ secrets.AZURE_AD_APPLICATION_SECRET }}
+          SELLER_ID: ${{ secrets.SELLER_ID }}
+        run: |
+          if ([string]::IsNullOrWhiteSpace($env:MSSTORE_PRODUCT_ID)) {
+            throw "MSSTORE_PRODUCT_ID repository variable is required."
+          }
+          $package = Get-ChildItem artifacts -Filter *.msix | Select-Object -First 1
+          if ($null -eq $package) {
+            throw "No MSIX package was created."
+          }
+          msstore reconfigure `
+            --tenantId $env:AZURE_AD_TENANT_ID `
+            --sellerId $env:SELLER_ID `
+            --clientId $env:AZURE_AD_APPLICATION_CLIENT_ID `
+            --clientSecret $env:AZURE_AD_APPLICATION_SECRET
+          msstore submission update $env:MSSTORE_PRODUCT_ID $package.FullName
+          msstore submission publish $env:MSSTORE_PRODUCT_ID

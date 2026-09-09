@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Package
+  xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+  xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+  xmlns:uap5="http://schemas.microsoft.com/appx/manifest/uap/windows10/5"
+  xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
+  IgnorableNamespaces="uap uap5 rescap">
+  <Identity Name="{{IDENTITY_NAME}}" Publisher="{{PUBLISHER}}" Version="{{VERSION}}" ProcessorArchitecture="x64" />
+  <Properties>
+    <DisplayName>Quick Note</DisplayName>
+    <PublisherDisplayName>{{PUBLISHER_DISPLAY_NAME}}</PublisherDisplayName>
+    <Description>Local-first notes from the system tray.</Description>
+    <Logo>Assets\StoreLogo.png</Logo>
+  </Properties>
+  <Resources>
+    <Resource Language="en-us" />
+  </Resources>
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.22000.0" MaxVersionTested="10.0.26100.0" />
+  </Dependencies>
+  <Capabilities>
+    <rescap:Capability Name="runFullTrust" />
+  </Capabilities>
+  <Applications>
+    <Application Id="QuickNote" Executable="quick-note.exe" EntryPoint="Windows.FullTrustApplication">
+      <uap:VisualElements
+        DisplayName="Quick Note"
+        Description="Local-first notes from the system tray."
+        BackgroundColor="#2b2b2b"
+        Square44x44Logo="Assets\Square44x44Logo.png"
+        Square150x150Logo="Assets\Square150x150Logo.png">
+        <uap:DefaultTile
+          Square71x71Logo="Assets\Square71x71Logo.png"
+          Square310x310Logo="Assets\Square310x310Logo.png" />
+      </uap:VisualElements>
+      <Extensions>
+        <uap5:Extension Category="windows.startupTask" Executable="quick-note.exe" EntryPoint="Windows.FullTrustApplication">
+          <uap5:StartupTask TaskId="QuickNoteStartup" Enabled="false" DisplayName="Quick Note" />
+        </uap5:Extension>
+      </Extensions>
+    </Application>
+  </Applications>
+</Package>

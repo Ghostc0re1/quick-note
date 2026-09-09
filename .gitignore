@@ -1,0 +1,26 @@
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+
+# Editor and operating-system state
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Common generated content
+node_modules/
+dist/
+build/
+coverage/
+target/
+src-tauri/target/
+src-tauri/gen/
+*.log
+
+# Microsoft Store / MSIX local tooling
+.winapp/
+artifacts/
+*.pfx
+*.cer
