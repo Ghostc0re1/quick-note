@@ -16,7 +16,7 @@ Notes stay on the device. Read the [privacy statement](PRIVACY.md).
 
 Install [Node.js](https://nodejs.org/), the stable
 [Rust toolchain](https://www.rust-lang.org/tools/install), and Microsoft WinApp
-CLI (`winget install Microsoft.WinAppCLI --source winget`). Then run:
+CLI (`winget install Microsoft.winappcli --source winget`). Then run:
 
 ```powershell
 npm install

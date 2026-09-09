@@ -20,7 +20,7 @@
   build, and `npm run msix:validate` to create an unsigned development MSIX.
 - Use `npm run check`, `npm run test`, `npm run rust:fmt`, `npm run rust:clippy`,
   `npm run rust:test`, and `npm run msix:validate` for focused verification.
-- Install Microsoft WinApp CLI with `winget install Microsoft.WinAppCLI --source
+- Install Microsoft WinApp CLI with `winget install Microsoft.winappcli --source
   winget`; it is only needed for package-identity development and MSIX builds.
 - Store identity values belong in GitHub repository variables after Partner
   Center assigns them. Never place Partner Center secrets or development
