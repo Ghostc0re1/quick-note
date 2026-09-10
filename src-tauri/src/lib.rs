@@ -1,3 +1,4 @@
+mod keep_awake;
 mod startup;
 mod storage;
 mod storage_path;
@@ -31,6 +32,8 @@ const CAPTURE_START_SIZE: u32 = 48;
 struct AppState {
     database: Mutex<Database>,
     capture_animation: Arc<AtomicU64>,
+    keep_awake: keep_awake::KeepAwake,
+    keep_awake_menu: CheckMenuItem<tauri::Wry>,
     startup_menu: CheckMenuItem<tauri::Wry>,
 }
 
@@ -222,10 +225,40 @@ fn toggle_startup(app: &AppHandle) {
     sync_startup_menu(app);
 }
 
-fn build_tray(app: &tauri::App) -> tauri::Result<CheckMenuItem<tauri::Wry>> {
+fn sync_keep_awake_menu(app: &AppHandle) {
+    let state = app.state::<AppState>();
+    let _ = state
+        .keep_awake_menu
+        .set_checked(state.keep_awake.is_enabled());
+}
+
+fn toggle_keep_awake(app: &AppHandle) {
+    let state = app.state::<AppState>();
+    let requested = !state.keep_awake.is_enabled();
+    if let Err(error) = state.keep_awake.set_enabled(requested) {
+        app.dialog()
+            .message(error)
+            .title("Keep PC awake")
+            .kind(MessageDialogKind::Error)
+            .show(|_| {});
+    }
+    sync_keep_awake_menu(app);
+}
+
+fn build_tray(
+    app: &tauri::App,
+) -> tauri::Result<(CheckMenuItem<tauri::Wry>, CheckMenuItem<tauri::Wry>)> {
     let show = MenuItem::with_id(app, "show", "Show Scattered Thoughts", true, None::<&str>)?;
     let hide = MenuItem::with_id(app, "hide", "Hide", true, None::<&str>)?;
     let history = MenuItem::with_id(app, "history", "Recent Notes", true, None::<&str>)?;
+    let keep_awake = CheckMenuItem::with_id(
+        app,
+        "keep-awake",
+        "Keep PC awake",
+        true,
+        false,
+        None::<&str>,
+    )?;
     let startup = CheckMenuItem::with_id(
         app,
         "startup",
@@ -246,6 +279,7 @@ fn build_tray(app: &tauri::App) -> tauri::Result<CheckMenuItem<tauri::Wry>> {
             &first_separator,
             &history,
             &second_separator,
+            &keep_awake,
             &startup,
             &third_separator,
             &quit,
@@ -258,7 +292,7 @@ fn build_tray(app: &tauri::App) -> tauri::Result<CheckMenuItem<tauri::Wry>> {
         .menu(&menu)
         .show_menu_on_left_click(false)
         .build(app)?;
-    Ok(startup)
+    Ok((keep_awake, startup))
 }
 
 fn register_shortcut(app: &tauri::App) {
@@ -301,12 +335,15 @@ pub fn run() {
                     return Err(std::io::Error::other(error).into());
                 }
             };
-            let startup_menu = build_tray(app)?;
+            let (keep_awake_menu, startup_menu) = build_tray(app)?;
             app.manage(AppState {
                 database: Mutex::new(database),
                 capture_animation: Arc::new(AtomicU64::new(0)),
+                keep_awake: keep_awake::KeepAwake::new(),
+                keep_awake_menu,
                 startup_menu,
             });
+            sync_keep_awake_menu(app.handle());
             sync_startup_menu(app.handle());
             register_shortcut(app);
             Ok(())
@@ -325,7 +362,11 @@ pub fn run() {
                 let _ = show_history(app);
             }
             "startup" => toggle_startup(app),
-            "quit" => app.exit(0),
+            "keep-awake" => toggle_keep_awake(app),
+            "quit" => {
+                let _ = app.state::<AppState>().keep_awake.set_enabled(false);
+                app.exit(0);
+            }
             _ => {}
         })
         .on_tray_icon_event(|app, event| {

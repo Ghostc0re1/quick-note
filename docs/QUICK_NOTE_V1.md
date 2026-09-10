@@ -15,8 +15,9 @@ or start automatically at sign-in unless the user explicitly enables it.
   brief 200ms ease-out transition; otherwise it opens centered immediately.
   The tray icon's left click performs the same capture toggle.
 - The tray context menu provides **Show Scattered Thoughts**, **Hide**,
-  **Recent Notes**, **Launch at sign-in**, and **Quit**. Launch at sign-in is
-  off by default and is available only in the Microsoft Store edition.
+  **Recent Notes**, **Keep PC awake**, **Launch at sign-in**, and **Quit**.
+  Keep PC awake defaults off for each app session. Launch at sign-in is off by
+  default and is available only in the Microsoft Store edition.
 - Capture and recent history are mutually exclusive windows. Opening one hides
   the other so the requested window receives focus.
 
@@ -34,6 +35,14 @@ window.
 Recent Notes opens a separate read-only history window. It shows at most 100
 notes ordered newest first, with local display timestamps. Editing, deletion,
 search, copying, export, tags, and pagination are intentionally out of scope.
+
+### Keep PC awake
+
+Keep PC awake is a Windows-native, session-only tray toggle. While checked, it
+prevents idle sleep and display timeout without simulating mouse or keyboard
+input. It clears when unchecked, when the app quits, or when the process exits.
+It does not override manual sleep, locking, lid-close behavior, or screen saver
+settings.
 
 ## Implementation
 
