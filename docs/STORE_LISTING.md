@@ -4,6 +4,43 @@ Scattered Thoughts is a free Windows 11 x64 Microsoft Store application. Its lis
 should describe it as a local-first tray note app and link to the repository's
 rendered `PRIVACY.md` as its privacy policy.
 
+## Customer-facing listing copy
+
+### Product description
+
+Scattered Thoughts is a quiet place to catch an idea before it disappears.
+It lives in the Windows system tray, ready whenever you need it. Press
+`Ctrl+Alt+Space`, type a note, and press Enter to save it.
+
+The capture window stays small, focused, and out of the way. Notes are saved
+locally on your device in a SQLite database, with no account, cloud sync,
+telemetry, or advertising. Open Recent Notes from the tray to revisit the last
+100 things you captured.
+
+### What’s new in version 0.1.0
+
+Initial release of Scattered Thoughts: a lightweight Windows tray app for
+instant local note capture, recent-note viewing, optional launch at sign-in,
+and an optional Keep PC awake toggle.
+
+### Product features
+
+Enter each line below as a separate feature in Partner Center; do not include
+the Markdown bullets in the Store form.
+
+- Capture a note anywhere with Ctrl+Alt+Space.
+- Save notes locally with no account or cloud service.
+- Keep a focused, borderless composer out of your way.
+- Review your 100 most recent notes from the system tray.
+- Keep an unfinished draft while hiding and reopening the composer.
+- Choose whether Scattered Thoughts launches at sign-in.
+- Optionally keep the PC and display awake for the current app session.
+
+### Store logo
+
+Use `windows/Assets/StoreLogo300x300.png` as the 1:1 Store logo. It is a
+300 by 300 PNG derived from the app’s existing icon.
+
 ## One-time Partner Center setup
 
 1. Enroll and verify the developer account, then reserve **Scattered Thoughts**.
