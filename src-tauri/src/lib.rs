@@ -43,7 +43,7 @@ fn save_note(state: tauri::State<'_, AppState>, body: String) -> Result<Note, St
     let database = state
         .database
         .lock()
-        .map_err(|_| "Quick Note database is unavailable.".to_owned())?;
+        .map_err(|_| "Scattered Thoughts database is unavailable.".to_owned())?;
     database.save_note(&body, created_at)
 }
 
@@ -52,7 +52,7 @@ fn list_recent_notes(state: tauri::State<'_, AppState>) -> Result<Vec<Note>, Str
     let database = state
         .database
         .lock()
-        .map_err(|_| "Quick Note database is unavailable.".to_owned())?;
+        .map_err(|_| "Scattered Thoughts database is unavailable.".to_owned())?;
     database.list_recent_notes()
 }
 
@@ -63,7 +63,7 @@ fn hide_capture(app: AppHandle) -> Result<(), String> {
 
 fn window(app: &AppHandle, label: &str) -> Result<WebviewWindow, String> {
     app.get_webview_window(label)
-        .ok_or_else(|| format!("Quick Note {label} window is unavailable."))
+        .ok_or_else(|| format!("Scattered Thoughts {label} window is unavailable."))
 }
 
 fn hide_window(app: &AppHandle, label: &str) -> Result<(), String> {
@@ -215,7 +215,7 @@ fn toggle_startup(app: &AppHandle) {
     if let Err(error) = startup::toggle() {
         app.dialog()
             .message(error)
-            .title("Quick Note startup")
+            .title("Scattered Thoughts startup")
             .kind(MessageDialogKind::Info)
             .show(|_| {});
     }
@@ -223,8 +223,8 @@ fn toggle_startup(app: &AppHandle) {
 }
 
 fn build_tray(app: &tauri::App) -> tauri::Result<CheckMenuItem<tauri::Wry>> {
-    let show = MenuItem::with_id(app, "show", "Show Quick Note", true, None::<&str>)?;
-    let hide = MenuItem::with_id(app, "hide", "Hide Quick Note", true, None::<&str>)?;
+    let show = MenuItem::with_id(app, "show", "Show Scattered Thoughts", true, None::<&str>)?;
+    let hide = MenuItem::with_id(app, "hide", "Hide", true, None::<&str>)?;
     let history = MenuItem::with_id(app, "history", "Recent Notes", true, None::<&str>)?;
     let startup = CheckMenuItem::with_id(
         app,
@@ -254,7 +254,7 @@ fn build_tray(app: &tauri::App) -> tauri::Result<CheckMenuItem<tauri::Wry>> {
 
     TrayIconBuilder::with_id(TRAY_ICON_ID)
         .icon(tray_icon())
-        .tooltip("Quick Note")
+        .tooltip("Scattered Thoughts")
         .menu(&menu)
         .show_menu_on_left_click(false)
         .build(app)?;
@@ -265,8 +265,10 @@ fn register_shortcut(app: &tauri::App) {
     let shortcut = Shortcut::new(Some(Modifiers::CONTROL | Modifiers::ALT), Code::Space);
     if app.global_shortcut().register(shortcut).is_err() {
         app.dialog()
-            .message("Ctrl+Alt+Space is already in use. Use the Quick Note tray icon instead.")
-            .title("Quick Note shortcut unavailable")
+            .message(
+                "Ctrl+Alt+Space is already in use. Use the Scattered Thoughts tray icon instead.",
+            )
+            .title("Scattered Thoughts shortcut unavailable")
             .kind(MessageDialogKind::Warning)
             .show(|_| {});
     }
@@ -293,7 +295,7 @@ pub fn run() {
                 Err(error) => {
                     app.dialog()
                         .message(&error)
-                        .title("Quick Note could not start")
+                        .title("Scattered Thoughts could not start")
                         .kind(MessageDialogKind::Error)
                         .show(|_| {});
                     return Err(std::io::Error::other(error).into());
@@ -345,7 +347,7 @@ pub fn run() {
             }
         })
         .build(tauri::generate_context!())
-        .expect("error while building Quick Note");
+        .expect("error while building Scattered Thoughts");
 
     app.run(|app, event| {
         if let RunEvent::WindowEvent {

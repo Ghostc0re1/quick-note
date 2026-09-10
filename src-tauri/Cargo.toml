@@ -2,7 +2,7 @@
 name = "quick-note"
 version = "0.1.0"
 description = "A local-first tray app for quick notes"
-authors = ["Quick Note contributors"]
+authors = ["Scattered Thoughts contributors"]
 edition = "2021"
 
 [lib]

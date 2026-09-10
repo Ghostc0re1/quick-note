@@ -20,11 +20,12 @@ pub struct Database {
 
 impl Database {
     pub fn open(app_data_dir: &Path) -> Result<Self, String> {
-        fs::create_dir_all(app_data_dir)
-            .map_err(|error| format!("Could not create the Quick Note data directory: {error}"))?;
+        fs::create_dir_all(app_data_dir).map_err(|error| {
+            format!("Could not create the Scattered Thoughts data directory: {error}")
+        })?;
 
         let connection = Connection::open(app_data_dir.join("quick-note.sqlite3"))
-            .map_err(|error| format!("Could not open the Quick Note database: {error}"))?;
+            .map_err(|error| format!("Could not open the Scattered Thoughts database: {error}"))?;
         let database = Self { connection };
         database.migrate()?;
         Ok(database)
@@ -37,7 +38,9 @@ impl Database {
             .map_err(|error| format!("Could not read database schema version: {error}"))?;
 
         if version > LATEST_SCHEMA_VERSION {
-            return Err("The Quick Note database was created by a newer app version.".to_owned());
+            return Err(
+                "The Scattered Thoughts database was created by a newer app version.".to_owned(),
+            );
         }
 
         if version == 0 {
@@ -54,7 +57,9 @@ impl Database {
                     COMMIT;
                     ",
                 )
-                .map_err(|error| format!("Could not create the Quick Note database: {error}"))?;
+                .map_err(|error| {
+                    format!("Could not create the Scattered Thoughts database: {error}")
+                })?;
         }
 
         Ok(())

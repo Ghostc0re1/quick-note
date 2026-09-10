@@ -1,12 +1,12 @@
-# Quick Note
+# Scattered Thoughts
 
-Quick Note is a Windows 11, local-first desktop app for capturing notes from
+Scattered Thoughts is a Windows 11, local-first desktop app for capturing notes from
 the system tray. Press `Ctrl+Alt+Space`, type, and press Enter to save the note
 to a local SQLite database.
 
 ## Install
 
-Quick Note is distributed through the Microsoft Store. Install it there, launch
+Scattered Thoughts is distributed through the Microsoft Store. Install it there, launch
 it once, and it will run in the system tray. Its **Launch at sign-in** tray
 option is off by default and can be changed at any time.
 
@@ -41,4 +41,5 @@ Tauri's local application-data directory. Neither database is stored here.
 
 See [the detailed v1 design](docs/QUICK_NOTE_V1.md) and
 [development baseline](docs/DEVELOPMENT.md) for behavior and project guidance.
-See [Store setup and releases](docs/STORE_LISTING.md) before enabling publishing.
+See [Store setup and releases](docs/STORE_LISTING.md) to build the first MSIX
+and enable later automated publishing.

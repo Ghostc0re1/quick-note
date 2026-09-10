@@ -1,6 +1,6 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "Quick Note",
+  "productName": "Scattered Thoughts",
   "version": "0.1.0",
   "identifier": "com.quicknote.desktop",
   "build": {
@@ -13,7 +13,7 @@
     "windows": [
       {
         "label": "capture",
-        "title": "Quick Note",
+        "title": "Scattered Thoughts",
         "url": "index.html",
         "width": 540,
         "height": 250,
@@ -26,7 +26,7 @@
       },
       {
         "label": "history",
-        "title": "Recent Notes — Quick Note",
+        "title": "Recent Notes — Scattered Thoughts",
         "url": "history.html",
         "width": 560,
         "height": 620,

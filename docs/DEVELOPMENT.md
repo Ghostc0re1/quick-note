@@ -6,7 +6,7 @@
 2. Read `AGENTS.md`; code beneath `src/` also follows `src/AGENTS.md`.
 3. Review and trust `.codex/hooks.json` in Codex via `/hooks` before relying on
    its safety checks.
-4. Quick Note uses Node.js for the minimal TypeScript UI and the stable Rust
+4. Scattered Thoughts uses Node.js for the minimal TypeScript UI and the stable Rust
    toolchain for Tauri and SQLite. Install both before running `npm install`.
 
 ## Baseline conventions

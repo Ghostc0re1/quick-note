@@ -25,14 +25,14 @@ const identity = isStoreBuild
       publisherDisplayName: requiredEnvironment("MSIX_PUBLISHER_DISPLAY_NAME"),
     }
   : {
-      name: "QuickNote.Development",
-      publisher: "CN=Quick Note Development",
-      publisherDisplayName: "Quick Note Development",
+      name: "ScatteredThoughts.Development",
+      publisher: "CN=Scattered Thoughts Development",
+      publisherDisplayName: "Scattered Thoughts Development",
     };
 const stagingDirectory = resolve(root, "artifacts", "msix-staging");
 const artifactDirectory = resolve(root, "artifacts");
 const executable = resolve(root, "src-tauri", "target", "release", "quick-note.exe");
-const output = resolve(artifactDirectory, `QuickNote_${versionParts.slice(1).join(".")}.0_x64.msix`);
+const output = resolve(artifactDirectory, `ScatteredThoughts_${versionParts.slice(1).join(".")}.0_x64.msix`);
 
 if (!existsSync(executable)) {
   throw new Error(`Expected Tauri release executable at ${executable}. Run the Tauri build first.`);

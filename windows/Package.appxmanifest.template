@@ -7,7 +7,7 @@
   IgnorableNamespaces="uap uap5 rescap">
   <Identity Name="{{IDENTITY_NAME}}" Publisher="{{PUBLISHER}}" Version="{{VERSION}}" ProcessorArchitecture="x64" />
   <Properties>
-    <DisplayName>Quick Note</DisplayName>
+    <DisplayName>Scattered Thoughts</DisplayName>
     <PublisherDisplayName>{{PUBLISHER_DISPLAY_NAME}}</PublisherDisplayName>
     <Description>Local-first notes from the system tray.</Description>
     <Logo>Assets\StoreLogo.png</Logo>
@@ -22,9 +22,9 @@
     <rescap:Capability Name="runFullTrust" />
   </Capabilities>
   <Applications>
-    <Application Id="QuickNote" Executable="quick-note.exe" EntryPoint="Windows.FullTrustApplication">
+    <Application Id="ScatteredThoughts" Executable="quick-note.exe" EntryPoint="Windows.FullTrustApplication">
       <uap:VisualElements
-        DisplayName="Quick Note"
+        DisplayName="Scattered Thoughts"
         Description="Local-first notes from the system tray."
         BackgroundColor="#2b2b2b"
         Square44x44Logo="Assets\Square44x44Logo.png"
@@ -35,7 +35,7 @@
       </uap:VisualElements>
       <Extensions>
         <uap5:Extension Category="windows.startupTask" Executable="quick-note.exe" EntryPoint="Windows.FullTrustApplication">
-          <uap5:StartupTask TaskId="QuickNoteStartup" Enabled="false" DisplayName="Quick Note" />
+          <uap5:StartupTask TaskId="ScatteredThoughtsStartup" Enabled="false" DisplayName="Scattered Thoughts" />
         </uap5:Extension>
       </Extensions>
     </Application>

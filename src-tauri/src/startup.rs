@@ -7,7 +7,7 @@ pub enum StartupStatus {
     Unavailable,
 }
 
-const STARTUP_TASK_ID: &str = "QuickNoteStartup";
+const STARTUP_TASK_ID: &str = "ScatteredThoughtsStartup";
 
 #[cfg(target_os = "windows")]
 fn status_from_windows(state: windows::ApplicationModel::StartupTaskState) -> StartupStatus {
@@ -29,7 +29,8 @@ fn task() -> Result<windows::ApplicationModel::StartupTask, String> {
         ApplicationModel::{Package, StartupTask},
     };
 
-    Package::Current().map_err(|_| "Quick Note is not running as a Store package.".to_owned())?;
+    Package::Current()
+        .map_err(|_| "Scattered Thoughts is not running as a Store package.".to_owned())?;
     StartupTask::GetAsync(&HSTRING::from(STARTUP_TASK_ID))
         .and_then(|operation| operation.get())
         .map_err(|error| format!("Could not read the Windows startup setting: {error}"))
@@ -76,14 +77,14 @@ pub fn toggle() -> Result<StartupStatus, String> {
             Err("Launch at sign-in is only available in the Microsoft Store edition.".to_owned())
         }
         StartupStatus::DisabledByUser => Err(
-            "Windows has disabled Quick Note at sign-in. Re-enable it in Windows Startup Apps or Task Manager."
+            "Windows has disabled Scattered Thoughts at sign-in. Re-enable it in Windows Startup Apps or Task Manager."
                 .to_owned(),
         ),
         StartupStatus::DisabledByPolicy => Err(
-            "Windows policy has disabled Quick Note at sign-in.".to_owned(),
+            "Windows policy has disabled Scattered Thoughts at sign-in.".to_owned(),
         ),
         StartupStatus::Unavailable => {
-            Err("Launch at sign-in is available in the Microsoft Store edition of Quick Note.".to_owned())
+            Err("Launch at sign-in is available in the Microsoft Store edition of Scattered Thoughts.".to_owned())
         }
     }
 }

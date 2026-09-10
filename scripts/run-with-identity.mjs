@@ -20,9 +20,9 @@ if (!versionParts) {
   throw new Error(`Package-identity development requires a stable MAJOR.MINOR.PATCH version, received ${version}.`);
 }
 const manifest = readFileSync(resolve(root, "windows", "Package.appxmanifest.template"), "utf8")
-  .replaceAll("{{IDENTITY_NAME}}", "QuickNote.Development")
-  .replaceAll("{{PUBLISHER}}", "CN=Quick Note Development")
-  .replaceAll("{{PUBLISHER_DISPLAY_NAME}}", "Quick Note Development")
+  .replaceAll("{{IDENTITY_NAME}}", "ScatteredThoughts.Development")
+  .replaceAll("{{PUBLISHER}}", "CN=Scattered Thoughts Development")
+  .replaceAll("{{PUBLISHER_DISPLAY_NAME}}", "Scattered Thoughts Development")
   .replaceAll("{{VERSION}}", `${versionParts.slice(1).join(".")}.0`);
 writeFileSync(resolve(stagingDirectory, "AppxManifest.xml"), manifest);
 

@@ -1,7 +1,7 @@
 {
   "$schema": "../gen/schemas/desktop-schema.json",
   "identifier": "default",
-  "description": "Capability for Quick Note's local windows.",
+  "description": "Capability for Scattered Thoughts' local windows.",
   "windows": ["capture", "history"],
   "permissions": ["core:default"]
 }
