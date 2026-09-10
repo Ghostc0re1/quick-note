@@ -5,7 +5,7 @@ on:
     tags: ["v*.*.*"]
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   release:
@@ -35,6 +35,14 @@ jobs:
             throw "Store releases require an annotated tag."
           }
           npm run version:check -- --tag $env:GITHUB_REF_NAME
+          $notes = git for-each-ref "refs/tags/$env:GITHUB_REF_NAME" --format="%(contents:body)"
+          if ([string]::IsNullOrWhiteSpace($notes)) {
+            throw "Store releases require a non-empty annotated tag body for release notes."
+          }
+          [System.IO.File]::WriteAllText(
+            (Join-Path $env:GITHUB_WORKSPACE "release-notes.md"),
+            $notes.Trim() + [Environment]::NewLine
+          )
       - run: npm run check
       - run: npm run test
       - run: npm run rust:fmt
@@ -43,8 +51,10 @@ jobs:
       - run: npm run msix:package
       - uses: actions/upload-artifact@v4
         with:
-          name: store-msix
-          path: artifacts/*.msix
+          name: store-release
+          path: |
+            artifacts/*.msix
+            release-notes.md
           retention-days: 7
       - shell: pwsh
         env:
@@ -60,10 +70,9 @@ jobs:
           if ($null -eq $package) {
             throw "No MSIX package was created."
           }
-          msstore reconfigure `
-            --tenantId $env:AZURE_AD_TENANT_ID `
-            --sellerId $env:SELLER_ID `
-            --clientId $env:AZURE_AD_APPLICATION_CLIENT_ID `
-            --clientSecret $env:AZURE_AD_APPLICATION_SECRET
-          msstore submission update $env:MSSTORE_PRODUCT_ID $package.FullName
-          msstore submission publish $env:MSSTORE_PRODUCT_ID
+          msstore reconfigure --tenantId $env:AZURE_AD_TENANT_ID --sellerId $env:SELLER_ID --clientId $env:AZURE_AD_APPLICATION_CLIENT_ID --clientSecret $env:AZURE_AD_APPLICATION_SECRET
+          msstore publish $package.FullName -id $env:MSSTORE_PRODUCT_ID
+      - shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create $env:GITHUB_REF_NAME --title "Scattered Thoughts $env:GITHUB_REF_NAME" --notes-file release-notes.md

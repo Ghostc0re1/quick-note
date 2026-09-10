@@ -7,6 +7,7 @@ export default defineConfig({
     emptyOutDir: true,
     rollupOptions: {
       input: {
+        about: new URL("./src/about.html", import.meta.url).pathname,
         capture: new URL("./src/index.html", import.meta.url).pathname,
         history: new URL("./src/history.html", import.meta.url).pathname,
       },

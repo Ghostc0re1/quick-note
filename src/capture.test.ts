@@ -16,7 +16,7 @@ describe("capture controller", () => {
     status = document.querySelector("p") as HTMLParagraphElement;
     hideCapture = vi.fn().mockResolvedValue(undefined);
     saveNote = vi.fn().mockResolvedValue({ id: 1, body: "note", createdAt: 1 });
-    attachCaptureController(textarea, status, { hideCapture, saveNote, listRecentNotes: vi.fn() });
+    attachCaptureController(textarea, status, { hideCapture, saveNote });
   });
 
   it("saves a note with Enter, then clears and hides capture", async () => {

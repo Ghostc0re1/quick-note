@@ -15,11 +15,12 @@ or start automatically at sign-in unless the user explicitly enables it.
   brief 200ms ease-out transition; otherwise it opens centered immediately.
   The tray icon's left click performs the same capture toggle.
 - The tray context menu provides **Show Scattered Thoughts**, **Hide**,
-  **Recent Notes**, **Keep PC awake**, **Launch at sign-in**, and **Quit**.
-  Keep PC awake defaults off for each app session. Launch at sign-in is off by
-  default and is available only in the Microsoft Store edition.
-- Capture and recent history are mutually exclusive windows. Opening one hides
-  the other so the requested window receives focus.
+  **Recent Notes**, **Keep PC awake**, **Enable diagnostic logging**, **Launch at
+  sign-in**, **About Scattered Thoughts**, and **Quit**. Keep PC awake defaults
+  off for each app session. Diagnostic logging is persistent local opt-in. Launch
+  at sign-in is off by default and is available only in the Microsoft Store edition.
+- Capture, recent history, and About are mutually exclusive windows. Opening one
+  hides the others so the requested window receives focus.
 
 ### Capture
 
@@ -32,9 +33,12 @@ window.
 
 ### Recent Notes
 
-Recent Notes opens a separate read-only history window. It shows at most 100
-notes ordered newest first, with local display timestamps. Editing, deletion,
-search, copying, export, tags, and pagination are intentionally out of scope.
+Recent Notes searches the full local library and shows at most 100 matching notes,
+with pinned matches first and local display timestamps. A visible Pin/Unpin
+button keeps important notes at the top. Each note's More menu provides Copy and
+Delete; deletion requires confirmation. Export writes all notes as Markdown and
+Back up creates a consistent local SQLite copy. Editing, import/restore, tags,
+and pagination remain out of scope.
 
 ### Keep PC awake
 
@@ -53,8 +57,9 @@ TypeScript frontend only invokes typed Rust commands.
 Notes are stored in SQLite. Store installs use the package's durable Windows
 local data folder; unpackaged development builds use Tauri's app-data directory
 under `%LOCALAPPDATA%`. The schema is versioned from its first release. Each
-note has an integer ID, nonblank text body, and UTC Unix timestamp. The Rust
-layer validates note text and the database has the same invariant.
+note has an integer ID, nonblank text body, UTC Unix timestamp, and pinned state.
+The database also stores the local diagnostic-logging preference. The Rust layer
+validates note text and the database has the same invariant.
 
 Scattered Thoughts is distributed as a signed MSIX through the Microsoft Store for
 Windows 11 x64. The Store handles customer updates. The startup task is a
@@ -71,7 +76,9 @@ explains that the shortcut could not be registered.
 ## Verification
 
 Automated coverage verifies migrations, blank-note rejection, exact multiline
-storage, timestamp assignment, newest-first history, the 100-note cap, and UI
-keyboard behavior. The manual Windows smoke test covers tray actions, hotkey
-focus, all hide paths, capture/history exclusivity, persistence after relaunch,
-tray-only exit, Store update persistence, and opt-in sign-in startup.
+storage, search, pinning, deletion, export, backup, local diagnostics, the
+100-note cap, and UI keyboard/history behavior. The manual Windows smoke test
+covers tray actions, hotkey focus, all hide paths, capture/history/About
+exclusivity, search, note actions, export/backup, diagnostics persistence,
+persistence after relaunch, tray-only exit, Store update persistence, and
+opt-in sign-in startup.

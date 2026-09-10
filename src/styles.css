@@ -104,3 +104,160 @@ h1 {
   font-size: 0.95rem;
   line-height: 1.4;
 }
++.history-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.history-header h1 {
+  margin: 0;
+}
+
+.history-file-actions,
+.dialog-actions,
+.about-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.history-page button,
+.about-page button,
+#note-search {
+  border: 1px solid #525252;
+  border-radius: 6px;
+  background: #3a3a3a;
+  color: inherit;
+  font: inherit;
+}
+
+.history-page button,
+.about-page button {
+  padding: 6px 9px;
+  cursor: pointer;
+}
+
+.history-page button:hover,
+.about-page button:hover {
+  background: #474747;
+}
+
+.history-page button:disabled,
+.about-page button:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+#note-search {
+  width: 100%;
+  padding: 9px 10px;
+  outline: none;
+}
+
+#note-search:focus {
+  border-color: #659be8;
+}
+
+.notes-section + .notes-section {
+  margin-top: 18px;
+}
+
+.notes-section h2 {
+  margin: 0 0 8px;
+  color: #ababab;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.notes-list {
+  display: grid;
+  gap: 10px;
+}
+
+.note-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.note-meta time {
+  margin: 0;
+}
+
+.note-pin {
+  min-width: 54px;
+}
+
+.note-menu {
+  margin-top: 10px;
+}
+
+.note-menu summary {
+  width: fit-content;
+  color: #ababab;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+.note-menu-actions {
+  display: flex;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.note-action:last-child,
+#confirm-delete {
+  border-color: #a85050;
+  color: #ffb0b0;
+}
+
+.empty-note {
+  color: #ababab;
+}
+
+.confirm-dialog {
+  width: min(320px, calc(100vw - 32px));
+  border: 1px solid #555;
+  border-radius: 10px;
+  background: #2b2b2b;
+  color: inherit;
+}
+
+.confirm-dialog::backdrop {
+  background: rgb(0 0 0 / 55%);
+}
+
+.confirm-dialog p {
+  margin: 0 0 16px;
+}
+
+.dialog-actions {
+  justify-content: flex-end;
+}
+
+.about-page {
+  min-height: 100vh;
+  padding: 20px;
+  background: #2b2b2b;
+}
+
+.about-page h1 {
+  margin: 0 0 12px;
+}
+
+.about-page p {
+  margin: 0 0 12px;
+  color: #d4d4d4;
+  line-height: 1.45;
+}
+
+.about-version,
+.about-diagnostics {
+  color: #ababab;
+  font-size: 0.85rem;
+}

@@ -17,11 +17,12 @@ locally on your device in a SQLite database, with no account, cloud sync,
 telemetry, or advertising. Open Recent Notes from the tray to revisit the last
 100 things you captured.
 
-### What’s new in version 0.1.0
+### What’s new in version 0.1.1
 
-Initial release of Scattered Thoughts: a lightweight Windows tray app for
-instant local note capture, recent-note viewing, optional launch at sign-in,
-and an optional Keep PC awake toggle.
+Find and manage local thoughts more easily: search your full note library, pin
+important notes, copy or delete notes, and make local Markdown exports or SQLite
+backups. This release also adds an About window and optional on-device diagnostic
+logging for troubleshooting.
 
 ### Product features
 
@@ -32,9 +33,13 @@ the Markdown bullets in the Store form.
 - Save notes locally with no account or cloud service.
 - Keep a focused, borderless composer out of your way.
 - Review your 100 most recent notes from the system tray.
+- Search your full local note library and pin important notes.
+- Copy or delete a note when you need to manage your history.
+- Export every note as Markdown or create a local SQLite backup.
 - Keep an unfinished draft while hiding and reopening the composer.
 - Choose whether Scattered Thoughts launches at sign-in.
 - Optionally keep the PC and display awake for the current app session.
+- Opt in to local diagnostic logging for troubleshooting.
 
 ### Store logo
 
@@ -69,10 +74,12 @@ client secret in GitHub Actions secrets, never in a repository variable or file.
 1. Set the same stable `MAJOR.MINOR.PATCH` version in `package.json`,
    `src-tauri/tauri.conf.json`, and `src-tauri/Cargo.toml`.
 2. Run `npm run version:check` and the normal local verification commands.
-3. Create and push an annotated tag named `vMAJOR.MINOR.PATCH`.
-4. The release workflow validates, packages, uploads a seven-day diagnostic
-   artifact, then submits the MSIX to Partner Center. Store certification is
-   still the gate before customers receive the update.
+3. Create and push an annotated tag named `vMAJOR.MINOR.PATCH` with a non-empty
+   multiline body describing the release.
+4. The release workflow validates, packages, uploads a seven-day MSIX-and-notes
+   artifact, publishes the MSIX through Microsoft Store Developer CLI, and creates
+   a GitHub Release from the tag body. Store certification is still the gate before
+   customers receive the update.
 
-GitHub tags are source releases only. Do not attach unsigned installers or
-development certificates to GitHub releases.
+GitHub Releases contain release notes only. Do not attach unsigned installers or
+development certificates to them.

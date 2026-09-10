@@ -3,7 +3,7 @@ import type { QuickNoteApi } from "./api";
 export function attachCaptureController(
   textarea: HTMLTextAreaElement,
   status: HTMLElement,
-  api: QuickNoteApi,
+  api: Pick<QuickNoteApi, "hideCapture" | "saveNote">,
 ): void {
   const focusComposer = () => {
     textarea.focus();

@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About Scattered Thoughts</title>
+  </head>
+  <body class="about-page">
+    <main>
+      <h1>Scattered Thoughts</h1>
+      <p class="about-version" id="about-version"></p>
+      <p>Local-first notes, stored only on this Windows device.</p>
+      <p class="about-diagnostics" id="about-diagnostics"></p>
+      <div class="about-actions">
+        <button id="open-privacy" type="button">Privacy</button>
+        <button id="open-support" type="button">Support</button>
+        <button id="open-diagnostics" type="button">Logs</button>
+      </div>
+      <p id="about-status" class="status" aria-live="polite"></p>
+    </main>
+    <script type="module" src="./about-entry.ts"></script>
+  </body>
+</html>

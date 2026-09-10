@@ -25,6 +25,8 @@ Those services process information under their own privacy terms.
   advertising.
 - You decide what to write. Avoid placing sensitive information in any app
   unless you are comfortable storing it on the device.
+- Optional diagnostic logging stays on the device, is off by default, and never
+  includes note text or is sent to the developer.
 
 ## Information the application handles
 
@@ -52,13 +54,19 @@ optional global shortcut, and, if you enable it, request that Windows keep the
 PC and display awake during the current session. These APIs are used to provide
 the feature; Scattered Thoughts does not record or transmit information from
 them.
+If you explicitly enable diagnostic logging in the tray menu, the app stores
+local error-category entries and timestamps to assist troubleshooting. Those
+entries exclude note text, search terms, clipboard contents, credentials, and
+raw error details. Logs remain on the device, rotate at a bounded size, and are
+never transmitted.
+
 
 ## How the application uses information
 
 The application uses saved note text and timestamps only to provide its core
-local features: saving notes and showing up to 100 recent notes. It uses an
-unsaved draft only to preserve the text you have not yet saved while the app is
-running.
+local features: saving, searching, pinning, copying, deleting, exporting, and
+showing up to 100 notes at a time. It uses an unsaved draft only to preserve the
+text you have not yet saved while the app is running.
 
 Scattered Thoughts does not use your notes or other app data for advertising,
 behavioral profiling, personalization, analytics, marketing, research,
@@ -72,12 +80,13 @@ local app storage, which is intended to persist across app updates. Development
 builds use a separate local application-data location; their notes are not
 automatically imported into the Store edition.
 
-Scattered Thoughts does not upload, synchronize, back up, export, or otherwise
-copy notes off your device. In version 1, the app has no note-deletion or export
-feature. Saved notes remain in the local database until the app's local data is
-removed through Windows or the device's storage-management processes. Before
-uninstalling or clearing app data, remember that version 1 does not provide an
-in-app backup or recovery option.
+Scattered Thoughts does not upload or synchronize notes. You may choose a
+location on your device to export notes as Markdown or to create a SQLite backup;
+the app writes only to that location after you select it. Saved notes remain in
+the local database until deleted in the app or the app's local data is removed
+through Windows or the device's storage-management processes. The app does not
+provide restore or import in this release, so keep backups where you can manage
+them safely.
 
 Unsaved drafts remain only in memory for the current running session. They are
 cleared when you successfully save them or when the app process exits.
@@ -112,12 +121,13 @@ hide the capture window without saving; the draft then remains only in memory
 while the app continues to run. You can control the optional **Launch at
 sign-in** setting through the app's tray menu and Windows Startup Apps controls.
 The optional **Keep PC awake** setting is session-only and resets when the app
-quits.
+quits. You can enable or disable local diagnostic logging at any time through
+the tray menu; the choice is stored locally.
 
 Because Scattered Thoughts does not receive a copy of your notes or maintain an
 online account, the developer cannot access, correct, export, or delete your
-notes remotely. You can manage the app's local data using Windows controls. In
-version 1, there is no in-app note deletion or export tool.
+notes remotely. You can manage notes in the app, export or back them up to a
+location you select, and manage the app's local data using Windows controls.
 
 ## Children
 

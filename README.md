@@ -4,6 +4,9 @@ Scattered Thoughts is a Windows 11, local-first desktop app for capturing notes 
 the system tray. Press `Ctrl+Alt+Space`, type, and press Enter to save the note
 to a local SQLite database.
 
+Recent Notes can search the local library, pin, copy, or delete notes, and create
+on-device Markdown exports and SQLite backups.
+
 ## Install
 
 Scattered Thoughts is distributed through the Microsoft Store. Install it there, launch
