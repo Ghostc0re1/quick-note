@@ -21,6 +21,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          fetch-tags: true
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -31,11 +32,13 @@ jobs:
       - run: npm ci
       - shell: pwsh
         run: |
-          if ((git cat-file -t $env:GITHUB_REF_NAME) -ne "tag") {
+          $tagRef = "refs/tags/$env:GITHUB_REF_NAME"
+          git fetch --force origin "+${tagRef}:${tagRef}"
+          if ((git cat-file -t $tagRef) -ne "tag") {
             throw "Store releases require an annotated tag."
           }
           npm run version:check -- --tag $env:GITHUB_REF_NAME
-          $notes = git for-each-ref "refs/tags/$env:GITHUB_REF_NAME" --format="%(contents:body)"
+          $notes = git for-each-ref $tagRef --format="%(contents:body)"
           if ([string]::IsNullOrWhiteSpace($notes)) {
             throw "Store releases require a non-empty annotated tag body for release notes."
           }
