@@ -63,8 +63,11 @@ Use `windows/Assets/StoreLogo300x300.png` as the 1:1 Store logo. It is a
 5. Complete the first Store submission manually after Partner Center validates
    the package and the Store listing is ready.
 6. Create a Microsoft Entra application, grant it the Partner Center Manager
-   role, then add its tenant ID, client ID, client secret, and seller ID as the
-   four GitHub Actions secrets named in `release-store.yml`.
+   role, then add its tenant ID, client ID, and client secret as GitHub Actions
+   secrets named in `release-store.yml`. Add the Partner Center seller ID as the
+   `MSSTORE_SELLER_ID` Actions variable (repository-level or the
+   `microsoft-store` environment). The workflow accepts the legacy `SELLER_ID`
+   secret as a fallback.
 
 The repository variables are identifiers rather than secrets. Keep the Entra
 client secret in GitHub Actions secrets, never in a repository variable or file.
